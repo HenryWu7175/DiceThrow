@@ -13,11 +13,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //this is used to set the edge to edge
-        supportFragmentManager.beginTransaction()
-            //this is used to add the fragment to the container
-            .add(R.id.fragmentContainerView, DieFragment())
-            //this is used to commit the transaction
-            .commit()
+//        supportFragmentManager.beginTransaction()
+//            //this is used to add the fragment to the container
+//            .add(R.id.fragmentContainerView, DieFragment())
+//            //this is used to commit the transaction
+//            .commit()
 
 
 

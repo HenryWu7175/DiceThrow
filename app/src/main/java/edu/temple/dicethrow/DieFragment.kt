@@ -11,10 +11,12 @@ import kotlin.random.Random
 class DieFragment : Fragment() {
 
     val DIESIDE = "sidenumber"
+    val DIEVALUE = "dievalue"
 
     lateinit var dieTextView: TextView
 //sides of the die
     var dieSides: Int = 6
+    var currentdieValue: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +36,7 @@ class DieFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_die, container, false).apply {
             //code begins here
             //textview is assigned to a variable
+
             dieTextView = findViewById(R.id.dieTextView)
 
         }
@@ -43,19 +46,33 @@ class DieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //button is assigned to a variable
-        throwDie()
+//        throwDie()
         //listens for a click and calls the throwDie function
         //this shouldnt be here because we want the button to be the one changing the textview
 //        view.setOnClickListener{
 //            throwDie()
 //        }
+
+    currentdieValue = savedInstanceState?.getInt(DIEVALUE) ?: Random.nextInt(dieSides)+1
+    dieTextView.text = currentdieValue.toString()
+
+
+
     }
 
     fun throwDie() {
-        //random number is generated and placed in the textview
-        dieTextView.text = (Random.nextInt(dieSides)+1).toString()
+//        //random number is generated and placed in the textview
+//        dieTextView.text = (Random.nextInt(dieSides)+1).toString()
+        currentdieValue = Random.nextInt(dieSides)+1
+        dieTextView.text = currentdieValue.toString()
+
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+        outState.putInt(DIEVALUE, currentdieValue ?: 1)
+
+    }
 //    //companion object is used to create a static object
 //    companion object {
 //        //this is used to create a new instance of the fragment
