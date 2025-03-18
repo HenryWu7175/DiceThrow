@@ -16,7 +16,7 @@ class DieFragment : Fragment() {
     lateinit var dieTextView: TextView
 //sides of the die
     var dieSides: Int = 6
-    var currentdieValue: Int? = null
+    var currentdieValue = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
