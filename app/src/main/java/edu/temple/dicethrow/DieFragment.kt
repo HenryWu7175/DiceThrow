@@ -13,11 +13,12 @@ class DieFragment : Fragment() {
     val DIESIDE = "sidenumber"
 
     lateinit var dieTextView: TextView
-
+//sides of the die
     var dieSides: Int = 6
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
             it.getInt(DIESIDE).run {
                 dieSides = this
@@ -31,19 +32,26 @@ class DieFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_die, container, false).apply {
+            //code begins here
+            //textview is assigned to a variable
             dieTextView = findViewById(R.id.dieTextView)
+
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //button is assigned to a variable
         throwDie()
+        //listens for a click and calls the throwDie function
+        //this shouldnt be here because we want the button to be the one changing the textview
         view.setOnClickListener{
             throwDie()
         }
     }
 
     fun throwDie() {
-        dieTextView.text = Random.nextInt(dieSides).toString()
+        //random number is generated and placed in the textview
+        dieTextView.text = (Random.nextInt(dieSides)+1).toString()
     }
 }
