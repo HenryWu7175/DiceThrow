@@ -11,6 +11,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //this is used to set the edge to edge
+        supportFragmentManager.beginTransaction()
+            //this is used to add the fragment to the container
+            .add(R.id.fragmentContainerView, DieFragment())
+            //this is used to commit the transaction
+            .commit()
+
+
+
         findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
             //use supportFragmentManager to get the fragment and call the throwDie function when the button is clicked
             //the id of the container is used to get the fragment

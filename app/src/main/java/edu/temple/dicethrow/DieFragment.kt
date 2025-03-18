@@ -55,4 +55,16 @@ class DieFragment : Fragment() {
         //random number is generated and placed in the textview
         dieTextView.text = (Random.nextInt(dieSides)+1).toString()
     }
+
+//    //companion object is used to create a static object
+//    companion object {
+//        //this is used to create a new instance of the fragment
+//        fun newInstance(sides: Int) = DieFragment().apply {
+//            //arguments is used to pass data to the fragment
+//            arguments = Bundle().apply {
+//                //putInt is used to put the data into the bundle
+//                putInt(DIESIDE, sides)
+//            }
+//        }
+//    }
 }
