@@ -39,15 +39,16 @@ class DieFragment : Fragment() {
         }
     }
 
+//do we even need this?
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //button is assigned to a variable
         throwDie()
         //listens for a click and calls the throwDie function
         //this shouldnt be here because we want the button to be the one changing the textview
-        view.setOnClickListener{
-            throwDie()
-        }
+//        view.setOnClickListener{
+//            throwDie()
+//        }
     }
 
     fun throwDie() {
