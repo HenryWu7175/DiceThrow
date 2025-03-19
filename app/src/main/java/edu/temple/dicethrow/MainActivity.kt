@@ -8,16 +8,36 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var dieFragment1: DieFragment
+    private lateinit var dieFragment2: DieFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //this is used to set the edge to edge
-//        supportFragmentManager.beginTransaction()
-//            //this is used to add the fragment to the container
-//            .add(R.id.fragmentContainerView, DieFragment())
-//            //this is used to commit the transaction
-//            .commit()
+        val existingFragment1 = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+        val existingFragment2 = supportFragmentManager.findFragmentById(R.id.fragmentContainerView2)
+
+        if (existingFragment1 == null) {
+            dieFragment1 = DieFragment.newInstance(6)
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentContainerView, dieFragment1)
+                .commit()
+        } else {
+            dieFragment1 = existingFragment1 as DieFragment
+        }
+
+        if (existingFragment2 == null) {
+            dieFragment2 = DieFragment.newInstance(6)
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentContainerView2, dieFragment2)
+                .commit()
+        } else {
+            dieFragment2 = existingFragment2 as DieFragment
+        }
+
+
 
 
 
@@ -34,12 +54,17 @@ class MainActivity : AppCompatActivity() {
 
 
             //this is the other way to do it
-                (supportFragmentManager
-                    //as is used to cast the fragment to the DieFragment
-                    //the difference between let and as is that let returns the fragment and as casts the fragment to the DieFragment
-                .findFragmentById(R.id.fragmentContainerView) as DieFragment).throwDie()
-               (supportFragmentManager
-                .findFragmentById(R.id.fragmentContainerView2) as DieFragment).throwDie()
+//                (supportFragmentManager
+//                    //as is used to cast the fragment to the DieFragment
+//                    //the difference between let and as is that let returns the fragment and as casts the fragment to the DieFragment
+//                .findFragmentById(R.id.fragmentContainerView) as DieFragment).throwDie()
+//               (supportFragmentManager
+//                .findFragmentById(R.id.fragmentContainerView2) as DieFragment).throwDie()
+
+
+            //lab 3/19/25 implementation
+            dieFragment1.throwDie()
+            dieFragment2.throwDie()
 
 
         }
