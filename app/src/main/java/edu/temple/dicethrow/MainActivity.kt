@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
                     //as is used to cast the fragment to the DieFragment
                     //the difference between let and as is that let returns the fragment and as casts the fragment to the DieFragment
                 .findFragmentById(R.id.fragmentContainerView) as DieFragment).throwDie()
+               (supportFragmentManager
+                .findFragmentById(R.id.fragmentContainerView2) as DieFragment).throwDie()
+
 
         }
     }
