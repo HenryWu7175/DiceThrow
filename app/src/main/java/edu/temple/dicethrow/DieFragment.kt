@@ -15,18 +15,17 @@ class DieFragment : Fragment() {
 
     lateinit var dieTextView: TextView
 //sides of the die
-    var dieSides: Int = 6
-    var currentdieValue = 0
+    private var dieSides: Int = 6
+    private var currentdieValue = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        arguments?.let {
-            it.getInt(DIESIDE).run {
-                dieSides = this
+        arguments?.getInt(DIESIDE)?.let {
+                dieSides = it
             }
-        }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +52,7 @@ class DieFragment : Fragment() {
 //            throwDie()
 //        }
 
-    currentdieValue = savedInstanceState?.getInt(DIEVALUE) ?: Random.nextInt(dieSides)+1
+    currentdieValue = savedInstanceState?.getInt(DIEVALUE) ?:( Random.nextInt(dieSides)+1)
     dieTextView.text = currentdieValue.toString()
 
 
@@ -69,19 +68,16 @@ class DieFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-    super.onSaveInstanceState(outState)
-        outState.putInt(DIEVALUE, currentdieValue ?: 1)
+        super.onSaveInstanceState(outState)
+        outState.putInt(DIEVALUE, currentdieValue)
 
     }
-//    //companion object is used to create a static object
-//    companion object {
-//        //this is used to create a new instance of the fragment
-//        fun newInstance(sides: Int) = DieFragment().apply {
-//            //arguments is used to pass data to the fragment
-//            arguments = Bundle().apply {
-//                //putInt is used to put the data into the bundle
-//                putInt(DIESIDE, sides)
-//            }
-//        }
-//    }
+    companion object{
+
+    fun newInstance(sides: Int) = DieFragment().apply {
+        arguments = Bundle().apply {
+            putInt(DIESIDE, sides)
+        }
+    }
+    }
 }
