@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import kotlin.random.Random
 
 class DieFragment : Fragment() {
@@ -16,7 +17,7 @@ class DieFragment : Fragment() {
     lateinit var dieTextView: TextView
 //sides of the die
     var dieSides: Int = 6
-    var currentdieValue = 0
+    lateinit var dieViewModel: DieViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,10 @@ class DieFragment : Fragment() {
                 dieSides = this
             }
         }
+
+        //saying requireActivity() means that the activity must exist to create the fragment
+        //this viewmodel is shared between the activity and the fragment
+        dieViewModel = ViewModelProvider(requireActivity()).get(DieViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -44,44 +49,48 @@ class DieFragment : Fragment() {
 
 //do we even need this?
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        //button is assigned to a variable
+    super.onViewCreated(view, savedInstanceState)
+    //button is assigned to a variable
 //        throwDie()
-        //listens for a click and calls the throwDie function
-        //this shouldnt be here because we want the button to be the one changing the textview
+    //listens for a click and calls the throwDie function
+    //this shouldnt be here because we want the button to be the one changing the textview
 //        view.setOnClickListener{
 //            throwDie()
 //        }
-
-    currentdieValue = savedInstanceState?.getInt(DIEVALUE) ?: Random.nextInt(dieSides)+1
-    dieTextView.text = currentdieValue.toString()
-
-
-
+    dieViewModel.getCurrentDieValue().observe(viewLifecycleOwner) {
+        dieTextView.text = it.toString()
     }
+
+    if (dieViewModel.getCurrentDieValue().value == null) {
+        dieViewModel.rollDie()
+    }
+}
+
+
+
 
     fun throwDie() {
 //        //random number is generated and placed in the textview
 //        dieTextView.text = (Random.nextInt(dieSides)+1).toString()
-        currentdieValue = Random.nextInt(dieSides)+1
-        dieTextView.text = currentdieValue.toString()
+
+        dieTextView.text = (Random.nextInt(dieSides)+1).toString()
 
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
-        outState.putInt(DIEVALUE, currentdieValue ?: 1)
+        outState.putInt(DIEVALUE, (Random.nextInt(dieSides)+1))
 
     }
 //    //companion object is used to create a static object
-//    companion object {
-//        //this is used to create a new instance of the fragment
-//        fun newInstance(sides: Int) = DieFragment().apply {
-//            //arguments is used to pass data to the fragment
-//            arguments = Bundle().apply {
-//                //putInt is used to put the data into the bundle
-//                putInt(DIESIDE, sides)
-//            }
-//        }
-//    }
+    companion object {
+        //this is used to create a new instance of the fragment
+        fun newInstance(sides: Int) = DieFragment().apply {
+            //arguments is used to pass data to the fragment
+            arguments = Bundle().apply {
+                //putInt is used to put the data into the bundle
+                putInt(DIESIDE, sides)
+            }
+        }
+    }
 }
